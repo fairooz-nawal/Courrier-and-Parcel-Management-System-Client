@@ -1,11 +1,12 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import { NavLink } from 'react-router'
+import { ContextAPI } from '../Context/AuthProvider'
 
-export default function Navbar() {
+export default function Navbar() { 
+    const {user,logout} = useContext(ContextAPI);
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const dropdownRef = useRef(null)
-
-    const activeClass = 'btn btn-ghost btn-active'
+    const activeClass = 'btn btn-ghost btn-active bg-black text-white'
     const inactiveClass = 'btn btn-ghost'
 
     // 🔗 Define all nav links here
@@ -128,11 +129,15 @@ export default function Navbar() {
 
             {/* Navbar end */}
             <div className="navbar-end">
-                <div className="flex flex-col md:flex-row lg:flex-row">
+                <div className="flex flex-col md:flex-row lg:flex-row gap-4">
                     <NavLink to="/profile" className="btn">
                         Profile
                     </NavLink>
-                    <NavLink
+                    {
+                        user ? <>
+                            <button onClick={logout} className='btn btn-ghost btn-active'>Log Out</button>
+                        </> : <>
+                        <NavLink
                         to="/login"
                         className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
                     >
@@ -144,6 +149,9 @@ export default function Navbar() {
                     >
                         Register
                     </NavLink>
+                        </>
+                    }
+                  
 
                 </div>
 

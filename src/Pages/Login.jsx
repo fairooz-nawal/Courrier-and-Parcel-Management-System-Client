@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 import logo from "../assets/login.png";
+import axios from 'axios';
 
 export default function Login() {
     const {
@@ -13,11 +14,34 @@ export default function Login() {
 
     const navigate = useNavigate();
 
-    const onSubmit = (data) => {
-        console.log('Login Data:', data);
-        // TODO: Call backend API to authenticate user
-        // Example: save token & redirect
-        navigate('/dashboard'); // redirect after success
+    const onSubmit = async (data) => {
+        try {
+            const result = await axios.post("http://localhost:5000/api/login", data);
+
+            if (result.data.success) {
+                // Save JWT Token in localStorage
+                localStorage.setItem("token", result.data.token);
+                localStorage.setItem("user", JSON.stringify(result.data.user)); // Save user info
+
+                // Redirect based on role
+                if (result.data.user.role === "admin") {
+                    navigate("/");
+                    alert("Admin login successful!");
+                    console.log(localStorage.getItem("user"));
+                } else if (result.data.user.role === "agent") {
+                    navigate("/");
+                    alert("Agent login successful!");
+                } else {
+                    navigate("/");
+                    alert(" login successful!");
+                }
+            } else {
+                alert(result.data.message); // show error from backend
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("Something went wrong. Please try again.");
+        }
     };
 
     return (

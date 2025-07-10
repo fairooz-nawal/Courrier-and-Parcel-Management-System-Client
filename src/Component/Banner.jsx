@@ -44,7 +44,7 @@ const Banner = () => {
         autoPlay
         infiniteLoop
         showArrows
-        interval={3000}
+        interval={2000}
         showThumbs={false}
         onChange={(index) => setCurrentIndex(index)}
       >
