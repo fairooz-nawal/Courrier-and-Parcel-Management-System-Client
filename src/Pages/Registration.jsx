@@ -2,8 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 import logo from "../assets/login.png";
-import GoogleSignIn from '../Component/GoogleSignIn';
 
 export default function Registeration() {
     const {
@@ -14,10 +14,24 @@ export default function Registeration() {
 
     const navigate = useNavigate();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log('Registration Data:', data);
-        // TODO: Send `data` to backend API
-        navigate('/login'); // redirect after success
+
+        try {
+            // Send registration data to backend
+            const response = await axios.post('http://localhost:5000/api/register', data);
+
+            if (response.data.success) {
+                console.log("Registration Success:", response.data);
+                navigate('/');
+            } else {
+                console.error("Registration Failed:", response.data.message);
+                alert(response.data.message);
+            }
+        } catch (err) {
+            console.error("API Error:", err.response?.data?.message || err.message);
+            alert(err.response?.data?.message || "Something went wrong!");
+        }
     };
 
     return (
@@ -104,13 +118,7 @@ export default function Registeration() {
                     >
                         Register
                     </motion.button>
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        type="submit"
-                        className="w-full">
-                        <GoogleSignIn></GoogleSignIn>
-                    </motion.div>
+
                     {/* Redirect to Login */}
                     <p className="text-center text-sm text-gray-600">
                         Already have an account?{' '}

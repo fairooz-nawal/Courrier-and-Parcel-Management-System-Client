@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 import logo from "../assets/login.png";
-import GoogleSignIn from '../Component/GoogleSignIn';
 
 export default function Login() {
     const {
@@ -91,13 +90,6 @@ export default function Login() {
                     >
                         Login
                     </motion.button>
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        type="submit"
-                        className="w-full">
-                        <GoogleSignIn></GoogleSignIn>
-                    </motion.div>
 
 
                     {/* Redirect to Register */}
