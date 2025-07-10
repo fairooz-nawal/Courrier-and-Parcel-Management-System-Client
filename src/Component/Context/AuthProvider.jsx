@@ -13,7 +13,6 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         const token = localStorage.getItem("token");
-
         if (storedUser && token) {
             // Optional: verify token with backend
             axios
@@ -28,6 +27,7 @@ const AuthProvider = ({ children }) => {
                         localStorage.removeItem("token");
                         localStorage.removeItem("user");
                         setUser(null);
+                        setLoading(true);
                     }
                 })
                 .catch((err) => {
@@ -35,6 +35,7 @@ const AuthProvider = ({ children }) => {
                     localStorage.removeItem("token");
                     localStorage.removeItem("user");
                     setUser(null);
+                    setLoading(true);
                 })
                 .finally(() => setLoading(false));
         } else {
@@ -47,6 +48,7 @@ const AuthProvider = ({ children }) => {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
+        setLoading(true);
     };
 
     // Logout method
@@ -59,7 +61,7 @@ const AuthProvider = ({ children }) => {
     console.log("This is contextAPI", user);
 
     return (
-        <ContextAPI.Provider value={{ user, login, logout, loading }}>
+        <ContextAPI.Provider value={{ user, login, logout, loading, setLoading }}>
             {children}
         </ContextAPI.Provider>
     );

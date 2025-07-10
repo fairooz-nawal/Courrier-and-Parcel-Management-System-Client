@@ -19,15 +19,7 @@ export default function Navbar() {
                 Home
             </NavLink>
         </li>
-        <li>
-            <NavLink
-                to="/track"
-                className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
-            >
-                Track Parcel
-            </NavLink>
-        </li>
-        <li>
+         <li>
             <NavLink
                 to="/book-parcel"
                 className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
@@ -37,28 +29,31 @@ export default function Navbar() {
         </li>
         <li>
             <NavLink
-                to="/customer-dashboard"
+                to="/track"
                 className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
             >
-                Customer Dashboard
+                Track Parcel
             </NavLink>
         </li>
-        <li>
+       
+        {user?.role == "agent" &&  <li>
             <NavLink
-                to="/agent-dashboard"
+                to="/agent"
                 className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
             >
                 Agent Dashboard
             </NavLink>
-        </li>
-        <li>
+        </li>}
+
+        {user?.role == "admin" &&  <li>
             <NavLink
-                to="/admin-dashboard"
+                to="/admin"
                 className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
             >
                 Admin Dashboard
             </NavLink>
-        </li>
+        </li>}
+       
 
     </>
 

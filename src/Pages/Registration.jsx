@@ -23,7 +23,7 @@ export default function Registeration() {
 
             if (response.data.success) {
                 console.log("Registration Success:", response.data);
-                navigate('/');
+                navigate('/login');
             } else {
                 console.error("Registration Failed:", response.data.message);
                 alert(response.data.message);

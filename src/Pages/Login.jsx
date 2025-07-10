@@ -25,15 +25,18 @@ export default function Login() {
 
                 // Redirect based on role
                 if (result.data.user.role === "admin") {
-                    navigate("/");
                     alert("Admin login successful!");
                     console.log(localStorage.getItem("user"));
+                    navigate("/admin");
+                    window.location.reload();
                 } else if (result.data.user.role === "agent") {
-                    navigate("/");
                     alert("Agent login successful!");
+                    navigate("/agent");
+                     window.location.reload();
                 } else {
                     navigate("/");
                     alert(" login successful!");
+                     window.location.reload();
                 }
             } else {
                 alert(result.data.message); // show error from backend
