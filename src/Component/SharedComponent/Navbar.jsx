@@ -75,7 +75,7 @@ export default function Navbar() {
     }, [])
 
     return (
-        <div className="navbar bg-base-100 shadow-sm px-4 lg:px-8">
+        <div className="navbar bg-base-100 shadow-sm px-4 w-full lg:px-8">
             <div className="navbar-start">
                 {/* Mobile dropdown */}
                 <div className="dropdown" ref={dropdownRef}>
