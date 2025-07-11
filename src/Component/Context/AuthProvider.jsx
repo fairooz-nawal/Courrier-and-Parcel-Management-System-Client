@@ -8,11 +8,11 @@ export const ContextAPI = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null); // stores logged-in user info
     const [loading, setLoading] = useState(true); // track loading state
-
+    const storedUser = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
     // Check token on app load (like Firebase observer)
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
+
         if (storedUser && token) {
             // Optional: verify token with backend
             axios
@@ -61,7 +61,7 @@ const AuthProvider = ({ children }) => {
     console.log("This is contextAPI", user);
 
     return (
-        <ContextAPI.Provider value={{ user, login, logout, loading, setLoading }}>
+        <ContextAPI.Provider value={{ user, login, logout, loading, setLoading, token }}>
             {children}
         </ContextAPI.Provider>
     );

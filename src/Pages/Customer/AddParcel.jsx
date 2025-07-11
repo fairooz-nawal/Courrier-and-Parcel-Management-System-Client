@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import {MapContainer,TileLayer,Marker,Popup,Polyline,useMap,} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { ContextAPI } from "../../Component/Context/AuthProvider";
 
 // Dhaka addresses
 const dhakaAddresses = [
@@ -42,7 +43,12 @@ function FitBounds({ routeCoords }) {
   return null;
 }
 
+
+
+
+// main function
 export default function AddParcel() {
+  const {user} = useContext(ContextAPI);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const [pickupLocation, setPickupLocation] = useState(null);
@@ -79,10 +85,14 @@ export default function AddParcel() {
       const token = localStorage.getItem("token");
       const parcelData = {
         ...data,
+        userId: user.id,
+        userEmail: user.email,
         pickupCoords: pickupLocation,
         deliveryCoords: deliveryLocation,
       };
 
+      console.log("Parcel Data:", parcelData);
+      
       const response = await axios.post("http://localhost:5000/api/parcels", parcelData, {
         headers: {
           Authorization: `Bearer ${token}`,

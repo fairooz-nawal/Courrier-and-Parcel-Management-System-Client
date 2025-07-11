@@ -16,6 +16,10 @@ import Agents from "../Pages/Dashboard/Agent";
 import Users from "../Pages/Dashboard/Users";
 import Reports from "../Pages/Dashboard/Report";
 import AddParcel from "../Pages/Customer/Addparcel";
+import DeliveryAgentPanel from "../Pages/RiderPanel/DeliveryAgentPanel";
+import TrackParcelContainer from "../Pages/Customer/TrackParcelContainer";
+import axios from "axios";
+
 
 export const router = createBrowserRouter([
     {
@@ -27,16 +31,16 @@ export const router = createBrowserRouter([
                 Component: Home
             },
             {
-                path: "track",
-                element:<ProtectedRouter><RiderLayout></RiderLayout></ProtectedRouter>
+                path: "track/:id",
+                element: <ProtectedRouter><TrackParcelContainer></TrackParcelContainer></ProtectedRouter>,
             },
             {
                 path: "book-parcel",
-                element:<ProtectedRouter><AddParcel></AddParcel></ProtectedRouter>
+                element: <ProtectedRouter><AddParcel></AddParcel></ProtectedRouter>
             },
             {
                 path: "/agent",
-                element:<ProtectedRouter><RiderLayout></RiderLayout></ProtectedRouter>
+                element: <ProtectedRouter><RiderLayout></RiderLayout></ProtectedRouter>
             },
 
         ]
@@ -68,6 +72,16 @@ export const router = createBrowserRouter([
             { path: "agents", element: <Agents /> },
             { path: "users", element: <Users /> },
             { path: "reports", element: <Reports /> },
+        ]
+    },
+    {
+        path: "/agent",
+        element: <RiderLayout></RiderLayout>,
+        children: [
+            {
+                index: true,
+                element: <DeliveryAgentPanel></DeliveryAgentPanel>
+            }
         ]
     }
 ]);

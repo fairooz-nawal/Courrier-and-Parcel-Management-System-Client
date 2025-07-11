@@ -27,14 +27,15 @@ export default function Navbar() {
                 Book Parcel
             </NavLink>
         </li>
-        <li>
+        {user?.role == "customer" &&   <li>
             <NavLink
-                to="/track"
+                to={`/track/${user?.id}`}
                 className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
             >
                 Track Parcel
             </NavLink>
-        </li>
+        </li>}
+       
        
         {user?.role == "agent" &&  <li>
             <NavLink
